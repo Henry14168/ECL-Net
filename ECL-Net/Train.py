@@ -21,8 +21,8 @@ CONFIG = {
 
     'input_dim': 2560,
     'hidden_dim': 64,
-    'n_layers': 2,
-    'dropout_rate': 0.4866,
+    'n_layers': 3,
+    'dropout_rate': 0.3,
     'edge_dim': 16,
 
     'pre_lr': 1e-05,
@@ -50,7 +50,7 @@ def calculate_metrics(logits, targets):
     if len(np.unique(targets)) < 2:
         return {'accuracy': 0.0, 'auc': 0.5, 'f1': 0, 'precision': 0, 'recall': 0}
     probs = torch.sigmoid(torch.tensor(logits)).numpy()
-    auc = roc_auc_score(targets, targets)
+    auc = roc_auc_score(targets,  preds)
     preds = (probs > 0.5).astype(int)
     targets = np.array(targets).astype(int)
     return {
